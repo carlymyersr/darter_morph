@@ -1,0 +1,16 @@
+.DS_Store
+.Rhistory
+.RData
+.Ruserdata
+
+# Generated outputs
+*.csv
+*.html
+*.png
+*.pdf
+
+# Local data/assets
+photos/
+side_shapes/
+landmarks_ref.txt
+darter_curves.txt
