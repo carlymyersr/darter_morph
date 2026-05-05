@@ -8,9 +8,19 @@
 *.html
 *.png
 *.pdf
+*.jpg
+*.jpeg
+*.rds
+/Figures/
+/figures/
+/Outputs/
+/outputs_mouth_to_body_angle/
+/papillae/
 
 # Local data/assets
-photos/
-side_shapes/
-landmarks_ref.txt
-darter_curves.txt
+/photos
+/side_shapes
+/trait_measurements
+/landmarks_ref.txt
+/darter_curves.txt
+/papillae.csv
