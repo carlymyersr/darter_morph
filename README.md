@@ -1,4 +1,4 @@
-# Darter Pipeline
+# Darter Morph
 
 R scripts for the darter morphometrics pipeline.
 
