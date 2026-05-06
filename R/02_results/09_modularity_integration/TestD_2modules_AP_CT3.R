@@ -6,7 +6,7 @@
 #   - Module 2: posterior hyoid_pelvic (sl3-8 + end) + orbit + jaw/operculum + pectoral/jaw
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_CT3.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_CT3.R")
 
 # ---- Test D modules ----
 testD_modules <- list(

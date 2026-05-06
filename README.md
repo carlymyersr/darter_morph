@@ -1,27 +1,41 @@
 # Darter Morph
 
-R scripts for the darter morphometrics pipeline, figure reproduction, trait analyses, modularity analyses, and supplemental analyses.
+R scripts for the darter morphometrics manuscript pipeline.
 
-## Contents
+The repository is organized around the manuscript methods/results outline rather than by the original figure folders in `Documents/darter_figures`.
 
-- `R/00_setup_morpho.R` - core morphometric initialization
-- `R/01_build_metadata.R` - specimen metadata aligned to GPA coordinates
-- `R/01_helpers_angles.R` - helper functions for angle measurements
-- `R/01_build_angle_measurements.R` - angle measurement construction
-- `R/02_subset_1950.R` - 1950 specimen subset
-- `R/03_subset_CT_timeseries.R` - CT time-series subset
-- `R/04_subset_CT_timeseries_plus_1950habitats.R` - CT time-series plus 1950 habitats subset
-- `R/05_subset_1950_quabbin_swift.R` - Quabbin and Swift 1950 subset
-- `R/master_reproduce_figures.R` - master reproduction runner
-- `R/figures/` - main figure scripts
-- `R/traits/` - trait quantification and trait figure scripts
-- `R/stats/` - model/statistical analysis scripts
-- `R/modularity/` - modularity and integration scripts
-- `R/supplemental/` - supplemental analyses
+## Main Entry Point
 
-## Notes
+```sh
+Rscript R/run_manuscript_pipeline.R
+```
 
-The repository includes R scripts imported from `Documents/darter_pipeline/R` and `Documents/darter_figures`.
-Input data, photos, generated figures, and analysis outputs are not committed.
+Compatibility entry point:
 
-See `REPRODUCING.md` for the master figure reproduction workflow.
+```sh
+Rscript R/master_reproduce_figures.R
+```
+
+## R Directory Layout
+
+- `R/00_setup_morpho.R`, `R/01_build_metadata.R`, `R/02_subset_1950.R`, `R/03_subset_CT_timeseries.R`, `R/04_subset_CT_timeseries_plus_1950habitats.R`, `R/05_subset_1950_quabbin_swift.R` - canonical setup and analysis subsets.
+- `R/01_methods/` - method validation and sensitivity analyses.
+- `R/02_results/` - canonical scripts for Results sections 1-9.
+- `R/03_supplemental/` - supplemental analyses that support, but are not central to, the Results sequence.
+- `R/04_archive/` - older, SICB, unsigned, duplicate, or exploratory scripts excluded from the main pipeline.
+
+See `MANUSCRIPT_PIPELINE.md` for the section-by-section script map.
+
+## Data
+
+Input data, photos, and generated outputs are not committed. By default, scripts expect local data under:
+
+```text
+~/Documents/darter_morphometrics
+```
+
+Override with:
+
+```sh
+DARTER_DATA_ROOT=/path/to/darter_morphometrics Rscript R/run_manuscript_pipeline.R
+```

@@ -1,32 +1,28 @@
 # ============================================================
-# Scripts/tests/TestE_2modules_DV.R
+# Scripts/tests/TestA_5modules.R
 # 1950 Modularity + Integration tests
-# Test E: 2 modules (Dorsal–Ventral)
-#   - Module 1 (dorsal-ish): cranium_orbital curve + orbit + anterior jaw points (incl premaxilla)
-#   - Module 2 (ventral-ish): hyoid_pelvic curve + operculum/procoracoid/pectoral + maxilla
+# Test A: 5 modules (as specified)
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_1950.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_1950.R")
 
-# ---- Test E modules ----
-testE_modules <- list(
-  M1_dorsal = c(
+# ---- Test A modules ----
+testA_modules <- list(
+  M1_cranium_orbital = c(
     "cranium_orbital_start",
     "cranium_orbital_sl1", "cranium_orbital_sl2", "cranium_orbital_sl3", "cranium_orbital_sl4",
     "cranium_orbital_sl5", "cranium_orbital_sl6", "cranium_orbital_sl7", "cranium_orbital_sl8",
-    "cranium_orbital_end",
-    "orbit_1", "orbit_2",
-    "ab_mandibulae", "preoperculum", "operculum", "premaxilla"
+    "cranium_orbital_end"
   ),
-  M2_ventral = c(
+  M2_hyoid_pelvic = c(
     "hyoid_pelvic_start",
     "hyoid_pelvic_sl1", "hyoid_pelvic_sl2", "hyoid_pelvic_sl3", "hyoid_pelvic_sl4",
     "hyoid_pelvic_sl5", "hyoid_pelvic_sl6", "hyoid_pelvic_sl7", "hyoid_pelvic_sl8",
-    "hyoid_pelvic_end",
-    "max_curve_preoperculum", "procoracoid",
-    "dorsal_pect", "ventral_pect",
-    "maxilla"
-  )
+    "hyoid_pelvic_end"
+  ),
+  M3_orbit = c("orbit_1", "orbit_2"),
+  M4_jaw_operculum = c("ab_mandibulae", "preoperculum", "max_curve_preoperculum", "operculum"),
+  M5_pectoral_jaw = c("dorsal_pect", "ventral_pect", "procoracoid", "premaxilla", "maxilla")
 )
 
 # ---- Run settings ----
@@ -35,8 +31,8 @@ SEED <- 1
 CI   <- TRUE
 
 run_test_raw_resid_1950(
-  test_id     = "TestE_2modules_DV",
-  module_list = testE_modules,
+  test_id     = "TestA_5modules",
+  module_list = testA_modules,
   iter        = ITER,
   CI          = CI,
   seed        = SEED

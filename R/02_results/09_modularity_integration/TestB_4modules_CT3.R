@@ -5,7 +5,7 @@
 #   - Module 1 combines BOTH curves (cranium_orbital + hyoid_pelvic)
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_CT3.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_CT3.R")
 
 # ---- Test B modules ----
 testB_modules <- list(

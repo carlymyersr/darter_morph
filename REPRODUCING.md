@@ -1,17 +1,17 @@
-# Reproducing Figures
+# Reproducing the Manuscript Pipeline
 
-The master reproduction entry point is:
+The canonical entry point is:
 
 ```sh
-Rscript R/master_reproduce_figures.R
+Rscript R/run_manuscript_pipeline.R
 ```
 
 The runner:
 
 - validates literal `source()` paths across `R/`
 - links local input data from `DARTER_DATA_ROOT`
-- runs the canonical pipeline and figure/stat scripts in sequence
-- logs task status under `Outputs/master_runs/<run_id>/`
+- runs scripts in the order of the methods/results outline
+- logs task status under `Outputs/manuscript_runs/<run_id>/`
 - compares generated output filenames against `Documents/darter_figures`
 
 ## Input Data
@@ -25,7 +25,7 @@ By default, local input data are read from:
 Override this with:
 
 ```sh
-DARTER_DATA_ROOT=/path/to/darter_morphometrics Rscript R/master_reproduce_figures.R
+DARTER_DATA_ROOT=/path/to/darter_morphometrics Rscript R/run_manuscript_pipeline.R
 ```
 
 The runner expects these inputs in the data root:
@@ -47,28 +47,31 @@ These inputs are symlinked into the repo working directory and ignored by Git.
 Static validation only:
 
 ```sh
-Rscript R/master_reproduce_figures.R --check-only
+Rscript R/run_manuscript_pipeline.R --check-only
 ```
 
 Stop immediately on required failures:
 
 ```sh
-Rscript R/master_reproduce_figures.R --stop-on-error
+Rscript R/run_manuscript_pipeline.R --stop-on-error
 ```
 
-Interactive landmark digitizing is excluded by default. Include it only when running from an interactive R-capable environment:
+Include archive/exploratory analyses:
 
 ```sh
-Rscript R/master_reproduce_figures.R --include-interactive
+Rscript R/run_manuscript_pipeline.R --include-archive
 ```
+
+## Organization
+
+See `MANUSCRIPT_PIPELINE.md` for the mapping between the outline and script locations.
 
 ## Current Validation
 
-On 2026-05-05, the full master runner completed with:
+On 2026-05-06:
 
-- 65 tasks
-- 64 successful tasks
-- 0 required failures
-- 1 optional failure: `R/modularity/Bonferroni_modularity_integration.R`
-
-The optional Bonferroni script expects a pre-existing `Outputs/Clean_modularity_analysis` directory. The runner leaves this as optional because the upstream modularity test scripts generate timestamped raw/residual outputs instead.
+- `Rscript R/run_manuscript_pipeline.R --check-only` passed.
+- All 78 R files parsed successfully.
+- A full manuscript run completed 57 tasks before the Bonferroni correction was moved out of the default run: 56 successful, 0 required failures, 1 optional failure.
+- The optional failure was `R/02_results/09_modularity_integration/99_multiple_testing_correction_optional.R`, which expects `Outputs/Clean_modularity_analysis`.
+- The run generated 323 new output files; 322 generated basenames matched files in `Documents/darter_figures`.

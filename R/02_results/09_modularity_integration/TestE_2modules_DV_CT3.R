@@ -6,7 +6,7 @@
 #   - Module 2 (ventral-ish): hyoid_pelvic curve + operculum/procoracoid/pectoral + maxilla
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_CT3.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_CT3.R")
 
 # ---- Test E modules ----
 testE_modules <- list(

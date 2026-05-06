@@ -1,10 +1,10 @@
 # ============================================================
-# Scripts/tests/TestA_5modules.R
-# 1950 Modularity + Integration tests
+# Scripts/tests_CT3/TestA_5modules_CT3.R
+# CT3 Modularity + Integration tests
 # Test A: 5 modules (as specified)
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_1950.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_CT3.R")
 
 # ---- Test A modules ----
 testA_modules <- list(
@@ -30,7 +30,7 @@ ITER <- 999
 SEED <- 1
 CI   <- TRUE
 
-run_test_raw_resid_1950(
+run_test_raw_resid_CT3(
   test_id     = "TestA_5modules",
   module_list = testA_modules,
   iter        = ITER,

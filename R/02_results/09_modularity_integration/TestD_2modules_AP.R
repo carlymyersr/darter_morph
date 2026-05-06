@@ -6,7 +6,7 @@
 #   - Module 2: full hyoid_pelvic curve + orbit + jaw/operculum + pectoral/jaw
 # ============================================================
 
-source("R/modularity/_run_modularity_integration_1950.R")
+source("R/02_results/09_modularity_integration/_run_modularity_integration_1950.R")
 
 # ---- Test D modules ----
 testD_modules <- list(
