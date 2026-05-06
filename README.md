@@ -2,7 +2,7 @@
 
 R scripts for the darter morphometrics manuscript pipeline.
 
-The repository is organized around the manuscript methods/results outline rather than by the original figure folders in `Documents/darter_figures`.
+The repository is organized around the current manuscript methods/results outline rather than by the original figure folders in `Documents/darter_figures`.
 
 ## Main Entry Point
 

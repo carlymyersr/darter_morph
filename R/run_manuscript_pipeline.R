@@ -1,8 +1,8 @@
 # ============================================================
 # R/run_manuscript_pipeline.R
 #
-# Master runner organized by the methods/results outline in:
-#   ~/Documents/darter_figures/outline methods and results.txt
+# Master runner organized by the current methods/results outline in:
+#   ~/Documents/darter_figures/outline methods and results 12.19.16 PM.txt
 #
 # Usage:
 #   Rscript R/run_manuscript_pipeline.R
@@ -36,8 +36,16 @@ data_root <- Sys.getenv(
 
 outline_file <- Sys.getenv(
   "DARTER_OUTLINE",
-  file.path(path.expand("~"), "Documents", "darter_figures", "outline methods and results.txt")
+  file.path(path.expand("~"), "Documents", "darter_figures", "outline methods and results 12.19.16 PM.txt")
 )
+if (!file.exists(outline_file)) {
+  candidates <- list.files(
+    file.path(path.expand("~"), "Documents", "darter_figures"),
+    pattern = "^outline methods and results 12[.]19[.]16.*PM[.]txt$",
+    full.names = TRUE
+  )
+  if (length(candidates) > 0) outline_file <- candidates[1]
+}
 
 prepare_input_links <- function(data_root) {
   required <- c("darter_curves.txt", "landmarks_ref.txt", "side_shapes")
@@ -127,6 +135,7 @@ tasks <- rbind(
   task("R/01_methods/01_size_allometry/03_1950_raw_pca_size_colored.R", "01_methods_size", "Methods 3: 1950 raw size-colored PCA", required = FALSE),
   task("R/01_methods/01_size_allometry/04_ct_timeseries_raw_pca_size_colored.R", "01_methods_size", "Methods 3: CT raw size-colored PCA", required = FALSE),
   task("R/01_methods/01_size_allometry/01_combined_raw_pca_size_colored.R", "01_methods_size", "Methods 3: combined raw size-colored PCA", required = FALSE),
+  task("R/01_methods/01_size_allometry/05_combined_allometry_procD.R", "01_methods_size", "Methods 3: combined procD allometry and logCsize x group", required = FALSE),
   task("R/01_methods/02_papillae_sensitivity/01_papillae_parallel_sensitivity.R", "01_methods_papillae", "Methods 4: papillae sensitivity", required = FALSE),
 
   task("R/02_results/01_morphospace_structure/01_1950_waterbody_pca_residual_pc12.R", "02_results_01_morphospace", "Results 1: 1950 PC1-PC2 residual PCA"),
@@ -149,11 +158,12 @@ tasks <- rbind(
 
   task("R/02_results/05_ct_reference_distribution/01_full_landscape_residual_pc12.R", "02_results_05_ct_reference", "Results 5: full landscape PC1-PC2"),
   task("R/02_results/05_ct_reference_distribution/02_full_landscape_residual_pc23.R", "02_results_05_ct_reference", "Results 5: full landscape PC2-PC3", required = FALSE),
+  task("R/02_results/05_ct_reference_distribution/03_ct_reference_mahalanobis_rarefaction.R", "02_results_05_ct_reference", "Results 5: CT reference Mahalanobis and rarefaction"),
 
   task("R/02_results/06_persistent_local_divergence/01_quabbin_swift_context_dependence_procD.R", "02_results_06_quabbin_swift", "Results 6: Quabbin/Swift context-dependence", required = FALSE),
-  task("R/02_results/07_reservoir_internal_structure/01_quabbin_swift_sampling_location_pca.R", "02_results_07_reservoir", "Results 7: reservoir internal structure", required = FALSE),
 
-  task("R/02_results/08_hydrology_structure/01_hydrology_groups_pca_procD_mahalanobis.R", "02_results_08_hydrology", "Results 8: hydrology groups, procD, Mahalanobis"),
+  task("R/02_results/07_hydrology_structure/01_hydrology_groups_pca_procD_mahalanobis.R", "02_results_07_hydrology", "Results 7: hydrology groups, procD, Mahalanobis"),
+  task("R/02_results/08_reservoir_internal_structure/01_quabbin_swift_sampling_location_pca.R", "02_results_08_reservoir", "Results 8: reservoir internal structure", required = FALSE),
 
   task("R/02_results/09_modularity_integration/TestA_5modules.R", "02_results_09_modularity", "Results 9: 1950 five-module test", required = FALSE),
   task("R/02_results/09_modularity_integration/TestB_4modules.R", "02_results_09_modularity", "Results 9: 1950 four-module test", required = FALSE),
@@ -165,7 +175,7 @@ tasks <- rbind(
   task("R/02_results/09_modularity_integration/TestC_3modules_CT3.R", "02_results_09_modularity", "Results 9: CT three-module test", required = FALSE),
   task("R/02_results/09_modularity_integration/TestD_2modules_AP_CT3.R", "02_results_09_modularity", "Results 9: CT AP partition", required = FALSE),
   task("R/02_results/09_modularity_integration/TestE_2modules_DV_CT3.R", "02_results_09_modularity", "Results 9: CT DV partition", required = FALSE),
-  task("R/02_results/09_modularity_integration/99_multiple_testing_correction_optional.R", "02_results_09_modularity", "Results 9: multiple-testing correction after manual clean-output curation", required = FALSE, archive = TRUE),
+  task("R/02_results/09_modularity_integration/99_modularity_multiple_testing_correction.R", "02_results_09_modularity", "Results 9: Bonferroni/BH corrections", required = FALSE),
 
   task("R/02_results/01_morphospace_structure/05_1950_waterbody_pca_residual_pc23_supplemental.R", "03_supplemental", "Supplement: 1950 PC2-PC3", required = FALSE),
   task("R/02_results/01_morphospace_structure/06_1950_waterbody_pca_residual_pc34_supplemental.R", "03_supplemental", "Supplement: 1950 PC3-PC4", required = FALSE),

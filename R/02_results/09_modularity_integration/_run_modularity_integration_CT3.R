@@ -71,6 +71,36 @@ assert_points_exist <- function(module_list, pt_names, test_id, coords_label) {
   invisible(TRUE)
 }
 
+assert_semilandmark_curves_intact <- function(module_list, test_id) {
+  required_curves <- list(
+    cranium_orbital = c(
+      "cranium_orbital_start",
+      paste0("cranium_orbital_sl", 1:8),
+      "cranium_orbital_end"
+    ),
+    hyoid_pelvic = c(
+      "hyoid_pelvic_start",
+      paste0("hyoid_pelvic_sl", 1:8),
+      "hyoid_pelvic_end"
+    )
+  )
+  point_module <- unlist(lapply(names(module_list), function(module_name) {
+    setNames(rep(module_name, length(module_list[[module_name]])), module_list[[module_name]])
+  }))
+  for (curve_name in names(required_curves)) {
+    curve_points <- required_curves[[curve_name]]
+    modules <- unique(unname(point_module[curve_points]))
+    modules <- modules[!is.na(modules)]
+    if (length(modules) != 1) {
+      stop(sprintf(
+        "[%s] Semilandmark curve '%s' is split across modules: %s",
+        test_id, curve_name, paste(modules, collapse = ", ")
+      ))
+    }
+  }
+  invisible(TRUE)
+}
+
 partition_from_modules <- function(module_list, pt_names) {
   part <- rep(NA_character_, length(pt_names))
   names(part) <- pt_names
@@ -137,6 +167,7 @@ run_one_test <- function(coords_arr, test_id, module_list, out_root, coords_labe
   # validate points exist
   pt_names <- dimnames(coords_arr)[[1]]
   assert_points_exist(module_list, pt_names, test_id, coords_label)
+  assert_semilandmark_curves_intact(module_list, test_id)
   
   # subset coords to points in this test
   pts_in_test <- unique(unlist(module_list, use.names = FALSE))
