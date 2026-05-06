@@ -12,6 +12,7 @@ The runner:
 - links local input data from `DARTER_DATA_ROOT`
 - runs scripts in the order of the current methods/results outline
 - logs task status under `Outputs/manuscript_runs/<run_id>/`
+- copies newly created or updated outputs into `manuscript_outputs/<run_id>/` by outline section
 - compares generated output filenames against `Documents/darter_figures`
 
 ## Input Data
@@ -56,10 +57,11 @@ Stop immediately on required failures:
 Rscript R/run_manuscript_pipeline.R --stop-on-error
 ```
 
-Include archive/exploratory analyses:
+Non-used scripts are retained under `R/non_used_scripts/` and are excluded from default validation.
+To include them in source-path validation:
 
 ```sh
-Rscript R/run_manuscript_pipeline.R --include-archive
+Rscript R/run_manuscript_pipeline.R --include-non-used
 ```
 
 ## Organization
@@ -70,9 +72,6 @@ See `MANUSCRIPT_PIPELINE.md` for the mapping between the outline and script loca
 
 On 2026-05-06, after reorganizing around `outline methods and results 12.19.16 PM.txt`:
 
-- `Rscript R/run_manuscript_pipeline.R --check-only` passed.
-- All 80 R files parsed successfully.
-- The default task plan contains 59 runnable tasks.
-- `R/01_methods/01_size_allometry/05_combined_allometry_procD.R` completed.
-- `R/02_results/05_ct_reference_distribution/03_ct_reference_mahalanobis_rarefaction.R` completed with `DARTER_RAREFACTION_ITER=10` as a smoke test.
-- `R/02_results/09_modularity_integration/99_modularity_multiple_testing_correction.R` completed using existing timestamped modularity outputs.
+- The repository was reorganized into `R/methods/`, `R/results/`, `R/supplemental/`, and `R/non_used_scripts/`.
+- The default task plan contains the runnable scripts required by the current outline.
+- New runs create sectioned output copies under `manuscript_outputs/<run_id>/`.

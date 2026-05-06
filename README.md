@@ -2,33 +2,61 @@
 
 R scripts for the darter morphometrics manuscript pipeline.
 
-The repository is organized around the current manuscript methods/results outline rather than by the original figure folders in `Documents/darter_figures`.
+The repository is organized around the current manuscript outline:
 
-## Main Entry Point
+```text
+~/Documents/darter_figures/outline methods and results 12.19.16 PM.txt
+```
+
+## Run
 
 ```sh
 Rscript R/run_manuscript_pipeline.R
 ```
 
-Compatibility entry point:
+Static path validation only:
 
 ```sh
-Rscript R/master_reproduce_figures.R
+Rscript R/run_manuscript_pipeline.R --check-only
 ```
 
-## R Directory Layout
+## Where Scripts Live
 
-- `R/00_setup_morpho.R`, `R/01_build_metadata.R`, `R/02_subset_1950.R`, `R/03_subset_CT_timeseries.R`, `R/04_subset_CT_timeseries_plus_1950habitats.R`, `R/05_subset_1950_quabbin_swift.R` - canonical setup and analysis subsets.
-- `R/01_methods/` - method validation and sensitivity analyses.
-- `R/02_results/` - canonical scripts for Results sections 1-9.
-- `R/03_supplemental/` - supplemental analyses that support, but are not central to, the Results sequence.
-- `R/04_archive/` - older, SICB, unsigned, duplicate, or exploratory scripts excluded from the main pipeline.
+- `R/methods/01_specimen_sampling_study_design/`
+- `R/methods/02_landmark_acquisition_geometric_morphometrics/`
+- `R/methods/03_size_correction_allometry/`
+- `R/methods/04_genital_papillae_sensitivity/`
+- `R/results/01_structure_variation_morphospace/`
+- `R/results/02_mean_shape_differentiation/`
+- `R/results/03_trait_specific_patterns/`
+- `R/results/04_within_group_variation/`
+- `R/results/05_ct_reference_distribution/`
+- `R/results/06_persistent_local_divergence/`
+- `R/results/07_hydrology_based_structure/`
+- `R/results/08_reservoir_internal_structure/`
+- `R/results/09_modularity_integration/`
+- `R/supplemental/` for supporting analyses retained outside the main results sequence.
+- `R/non_used_scripts/` for old wrappers, deprecated scripts, SICB presentation scripts, and analyses excluded by the current outline.
 
-See `MANUSCRIPT_PIPELINE.md` for the section-by-section script map.
+## Where Outputs Go
+
+Legacy scripts still write to their original working folders such as `figures/`, `Outputs/`, `papillae/`, and `outputs_mouth_to_body_angle/`.
+
+The master runner now also copies newly created or updated outputs into a clean sectioned folder for each run:
+
+```text
+manuscript_outputs/<run_id>/<outline_section>/<figures|tables|models|other>/
+```
+
+Run logs are written separately to:
+
+```text
+Outputs/manuscript_runs/<run_id>/
+```
 
 ## Data
 
-Input data, photos, and generated outputs are not committed. By default, scripts expect local data under:
+By default, scripts expect local input data under:
 
 ```text
 ~/Documents/darter_morphometrics
